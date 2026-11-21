@@ -1,20 +1,34 @@
-const hodies = [
+  GNU nano 9.2                                                     app.js                                                                
+=const hodies = [
   "Gray Santa-Cruz",
   "Black Disney",
   "Royal-Blue Eagles",
-  "Blue-Black Quater-Zip",
+  "Blue-Black Q-Zip",
+  "Navy Air-Force",
+  "Black Zip-Up",
+  "Small Black Sweater",
 ];
 
 const shirts = [
   "White T-shirt",
+  "White T-shirt",
+  "White T-shirt",
+  "White T-shirt",
+  "Black T-shirt",
+  "Black T-shirt",
+  "Black T-shirt",
   "Black T-shirt",
   "Gray Berkely shirt",
+  "Black Q-Button",
+  "Gray Q-Button",
+  "Navy Q-Button",
+
 ];
 
 const pants = [
-  "Blue Baggy jeans",
+  "Light-Blue Baggy jeans",
   "Black Baggy jeans",
-  "Blue Mexican jeans",
+  "Blue jeans",
 ];
 
 const shoes = [
