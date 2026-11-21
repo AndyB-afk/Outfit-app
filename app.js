@@ -1,4 +1,4 @@
-const hodies = [
+const hoodies = [
   "Gray Santa-Cruz",
   "Black Disney",
   "Royal-Blue Eagles",
@@ -41,12 +41,12 @@ function getRandomItem(items) {
 }
 
 function generateOutfit() {
-  const hodie = getRandomItem(hodies);
+  const hoodie = getRandomItem(hoodies);
   const shirt = getRandomItem(shirts);
   const pantsItem = getRandomItem(pants);
   const shoesItem = getRandomItem(shoes);
 
-  return `${hodie} + ${shirt} + ${pantsItem} + ${shoesItem}`;
+  return `${hoodie} + ${shirt} + ${pantsItem} + ${shoesItem}`;
 }
 
 const generateButton = document.querySelector("#generate-outfit");
@@ -55,6 +55,163 @@ const outfitResult = document.querySelector("#outfit-result");
 generateButton.addEventListener("click", () => {
   outfitResult.textContent = generateOutfit();
 });
+
+const wardrobeGroups = {
+  hoodies,
+  shirts,
+  pants,
+  shoes,
+};
+
+const recommendationForm = document.querySelector("#recommendation-form");
+const recommendationResult = document.querySelector("#recommendation-result");
+const recommendationList = document.querySelector("#recommendation-list");
+const recommendationStorageKey = "outfit-app-recommendations";
+
+function createItemChoices(containerId, categoryName, items) {
+  const container = document.querySelector(`#${containerId}`);
+  const uniqueItems = [...new Set(items)];
+
+  uniqueItems.forEach((item) => {
+    const label = document.createElement("label");
+    label.className = "item-choice";
+
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = categoryName;
+    radio.value = item;
+
+    const image = document.createElement("div");
+    image.className = "item-choice-image";
+    image.textContent = "No image";
+
+    const text = document.createElement("span");
+    text.textContent = item;
+
+    label.append(image, radio, text);
+    container.append(label);
+  });
+}
+
+createItemChoices("hoodie-options", "hoodie", wardrobeGroups.hoodies);
+createItemChoices("shirt-options", "shirt", wardrobeGroups.shirts);
+createItemChoices("pants-options", "pants", wardrobeGroups.pants);
+createItemChoices("shoe-options", "shoes", wardrobeGroups.shoes);
+
+function updateOutfitPreview(categoryName, itemName) {
+  const preview = document.querySelector(
+    `[data-preview-category="${categoryName}"]`,
+  );
+
+  if (!preview) {
+    return;
+  }
+
+  preview.querySelector(".preview-name").textContent = itemName;
+  preview.querySelector(".preview-image").textContent = "No image";
+}
+
+recommendationForm.addEventListener("change", (event) => {
+  if (event.target.matches('input[type="radio"]')) {
+    updateOutfitPreview(event.target.name, event.target.value);
+  }
+});
+
+function loadRecommendations() {
+  const savedRecommendations = localStorage.getItem(
+    recommendationStorageKey,
+  );
+
+  if (!savedRecommendations) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(savedRecommendations);
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveRecommendations(recommendations) {
+  localStorage.setItem(
+    recommendationStorageKey,
+    JSON.stringify(recommendations),
+  );
+}
+
+function renderRecommendations() {
+  const recommendations = loadRecommendations();
+  recommendationList.replaceChildren();
+
+  recommendations
+    .slice()
+    .reverse()
+    .forEach((recommendation) => {
+      const card = document.createElement("article");
+      card.className = "recommendation-card";
+
+      const author = document.createElement("p");
+      author.textContent = `Recommended by: ${recommendation.author}`;
+      card.append(author);
+
+      const outfit = document.createElement("p");
+      outfit.textContent =
+        `${recommendation.hoodie} + ` +
+        `${recommendation.shirt} + ` +
+        `${recommendation.pants} + ` +
+        `${recommendation.shoes}`;
+      card.append(outfit);
+
+      recommendationList.append(card);
+    });
+}
+
+recommendationForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(recommendationForm);
+  const categories = ["hoodie", "shirt", "pants", "shoes"];
+  const missingCategory = categories.find(
+    (category) => !formData.get(category),
+  );
+
+  if (missingCategory) {
+    recommendationResult.textContent =
+      `Please choose a ${missingCategory} before saving.`;
+    return;
+  }
+
+  const recommendation = {
+    author:
+      formData.get("recommendationName").trim() || "Anonymous friend",
+    hoodie: formData.get("hoodie"),
+    shirt: formData.get("shirt"),
+    pants: formData.get("pants"),
+    shoes: formData.get("shoes"),
+  };
+
+  const recommendations = loadRecommendations();
+  recommendations.push(recommendation);
+
+  try {
+    saveRecommendations(recommendations);
+  } catch (error) {
+    recommendationResult.textContent =
+      "The recommendation could not be saved.";
+    return;
+  }
+
+  recommendationResult.textContent =
+    `${recommendation.author} recommended: ` +
+    `${recommendation.hoodie} + ${recommendation.shirt} + ` +
+    `${recommendation.pants} + ${recommendation.shoes}`;
+
+  recommendationForm.reset();
+  renderRecommendations();
+});
+
+renderRecommendations();
 
 const inspirationForm = document.querySelector("#inspiration-form");
 const inspirationBoard = document.querySelector("#inspiration-board");

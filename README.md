@@ -25,3 +25,4 @@ To be selected after the first prototype.
 - Day 2: Created the web localy to test
 - Created app.js to have my closet items be options and to be randomly chosen to test the website.
 - Created Style inpiration board"
+- Created the Split-View outfit recomndation builder

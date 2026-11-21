@@ -22,6 +22,88 @@
         </p>
       </section>
 
+      <section class="recommendation-builder" aria-labelledby="builder-heading">
+        <h2 id="builder-heading">Outfit Recommendation Builder</h2>
+        <p>Choose one item from each category to recommend an outfit.</p>
+
+        <form id="recommendation-form">
+          <label>
+            Your name
+            <input
+              id="recommendation-name"
+              name="recommendationName"
+              type="text"
+              placeholder="Optional"
+            >
+          </label>
+
+          <div class="builder-layout">
+            <aside class="outfit-preview" aria-label="Selected outfit preview">
+              <h3>Selected outfit</h3>
+
+              <div class="preview-item" data-preview-category="hoodie">
+                <span class="preview-label">Hoodie / sweater</span>
+                <div class="preview-image">
+                  <span>Select an item</span>
+                </div>
+                <strong class="preview-name">Not selected</strong>
+              </div>
+
+              <div class="preview-item" data-preview-category="shirt">
+                <span class="preview-label">Shirt</span>
+                <div class="preview-image">
+                  <span>Select an item</span>
+                </div>
+                <strong class="preview-name">Not selected</strong>
+              </div>
+
+              <div class="preview-item" data-preview-category="pants">
+                <span class="preview-label">Pants</span>
+                <div class="preview-image">
+                  <span>Select an item</span>
+                </div>
+                <strong class="preview-name">Not selected</strong>
+              </div>
+
+              <div class="preview-item" data-preview-category="shoes">
+                <span class="preview-label">Shoes</span>
+                <div class="preview-image">
+                  <span>Select an item</span>
+                </div>
+                <strong class="preview-name">Not selected</strong>
+              </div>
+
+              <button type="submit">Save recommendation</button>
+            </aside>
+
+            <div class="builder-options">
+              <fieldset class="item-category">
+                <legend>Hoodies / sweaters</legend>
+                <div id="hoodie-options" class="item-options"></div>
+              </fieldset>
+
+              <fieldset class="item-category">
+                <legend>Shirts</legend>
+                <div id="shirt-options" class="item-options"></div>
+              </fieldset>
+
+              <fieldset class="item-category">
+                <legend>Pants</legend>
+                <div id="pants-options" class="item-options"></div>
+              </fieldset>
+
+              <fieldset class="item-category">
+                <legend>Shoes</legend>
+                <div id="shoe-options" class="item-options"></div>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+
+        <div id="recommendation-result" aria-live="polite"></div>
+        <div id="recommendation-list"></div>
+      </section>
+
       <section class="inspiration" aria-labelledby="inspiration-heading">
         <div class="section-heading">
           <h2 id="inspiration-heading">Style board</h2>
