@@ -33,7 +33,7 @@ function generateOutfit() {
   const pantsItem = getRandomItem(pants);
   const shoesItem = getRandomItem(shoes);
 
-  return `${shirt} + ${pantsItem} + ${shoesItem}`;
+  return `${hodie} + ${shirt} + ${pantsItem} + ${shoesItem}`;
 }
 
 const generateButton = document.querySelector("#generate-outfit");
