@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Outfit-app</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
   </head>
   <body>
     <main>
       <h1>Outfit-app</h1>
       <p>Your personal outfit generator.</p>
 
-      <button type="button">Generate Outfit</button>
+      <button id="generate-outfit" type="button">Generate Outfit</button>
+      <p id="outfit-result" aria-live="polite">
+        Your outfit will appear here.
+      </p>
     </main>
   </body>
 </html>
