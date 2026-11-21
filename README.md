@@ -16,6 +16,15 @@ Generate outfits using photos of clothes I own with insparation from oufits on P
 ## Technology
 To be selected after the first prototype.
 
+
+## Current status
+- Desktop outfit recommendation builder
+- Left-side selected outfit preview
+- Right-side category item cards
+- Clothing quantities currently consolidated
+- Real clothing photos pending
+- Browser-local recommendations and inspiration data
+
 ## Development Log
 - Day 1: Created the Github repository and local clone.
 - Configured Git and GitHub SSH authentication.
