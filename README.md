@@ -3,15 +3,15 @@
 A personal closet and outfit-generation web app.
 
 ## Goal
-Generate outfits using photos of clothes i own with insparation from oufits on pinterest, the style i seek with the clothes i own.
+Generate outfits using photos of clothes I own with insparation from oufits on Pinterest, the style I seek with the clothes I own.
 
 ## Planned Features
-- add clothing photos
-- categorizing clothing
-- filter by type and color
-- generate outfits
-- favorite outfits
-- use the app on an android tablet
+- Add clothing photos
+- Categorizing clothing
+- Filter by type and color
+- Generate outfits
+- Favorite outfits
+- Use the app on an android tablet
 
 ## Technology
 To be selected after the first prototype.
