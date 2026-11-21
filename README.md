@@ -18,4 +18,6 @@ To be selected after the first prototype.
 
 ## Development Log
 -Day 1: created the Github repository and local clone.
-
+-Configured Git and GitHub SSH authentication.
+-Created and synchronized the first HTML/CSS prototype.
+-Learned the basic Git workflow: edit, add, commit, pull, push.
