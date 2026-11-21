@@ -8,14 +8,77 @@
     <script src="app.js" defer></script>
   </head>
   <body>
-    <main>
-      <h1>Outfit-app</h1>
-      <p>Your personal outfit generator.</p>
+    <main class="app-shell">
+      <header class="app-header">
+        <h1>Outfit-app</h1>
+        <p>Your personal closet and outfit planner.</p>
+      </header>
 
-      <button id="generate-outfit" type="button">Generate Outfit</button>
-      <p id="outfit-result" aria-live="polite">
-        Your outfit will appear here.
-      </p>
+      <section class="generator" aria-labelledby="generator-heading">
+        <h2 id="generator-heading">Quick outfit</h2>
+        <button id="generate-outfit" type="button">Generate Outfit</button>
+        <p id="outfit-result" aria-live="polite">
+          Your outfit will appear here.
+        </p>
+      </section>
+
+      <section class="inspiration" aria-labelledby="inspiration-heading">
+        <div class="section-heading">
+          <h2 id="inspiration-heading">Style board</h2>
+        </div>
+
+        <form id="inspiration-form">
+          <label>
+            Inspiration name
+            <input id="inspiration-name" name="name" type="text" required>
+          </label>
+
+          <label>
+            Style
+            <select id="inspiration-style" name="style">
+              <option value="casual">Casual</option>
+              <option value="streetwear">Streetwear</option>
+              <option value="minimal">Minimal</option>
+              <option value="formal">Formal</option>
+              <option value="business-casual">Business casual</option>
+            </select>
+          </label>
+
+          <label>
+            Colors
+            <input
+              id="inspiration-colors"
+              name="colors"
+              type="text"
+              placeholder="Black, white, blue"
+            >
+          </label>
+
+          <label>
+            Pinterest or image URL
+            <input
+              id="inspiration-source"
+              name="source"
+              type="url"
+              placeholder="https://..."
+            >
+          </label>
+
+          <label>
+            Upload inspiration image
+            <input
+              id="inspiration-image"
+              name="image"
+              type="file"
+              accept="image/*"
+            >
+          </label>
+
+          <button type="submit">Save inspiration</button>
+        </form>
+
+        <div id="inspiration-board" class="inspiration-board"></div>
+      </section>
     </main>
   </body>
 </html>
