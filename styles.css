@@ -284,6 +284,25 @@ body {
   object-fit: cover;
 }
 
+.recommendation-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.recommendation-actions form {
+  margin: 0;
+}
+
+.recommendation-actions button {
+  padding: 0.65rem 0.9rem;
+  cursor: pointer;
+}
+
+.recommendation-actions .reject-button {
+  background: #b91c1c;
+}
+
 .generated-outfit {
   display: grid;
   grid-template-columns: repeat(4, minmax(8rem, 1fr));

@@ -220,6 +220,29 @@ def recommendations():
     return jsonify({"id": cursor.lastrowid, "status": "pending"}), 201
 
 
+@app.route("/api/recommendations/<int:recommendation_id>/status", methods=["POST"])
+def update_recommendation_status(recommendation_id):
+    status = (request.form.get("status") or "").strip()
+
+    if status not in {"approved", "rejected"}:
+        return jsonify({"error": "Status must be approved or rejected."}), 400
+
+    with get_database() as connection:
+        cursor = connection.execute(
+            """
+            UPDATE recommendations
+            SET status = ?
+            WHERE id = ?
+            """,
+            (status, recommendation_id),
+        )
+
+    if cursor.rowcount == 0:
+        return jsonify({"error": "Recommendation not found."}), 404
+
+    return jsonify({"id": recommendation_id, "status": status})
+
+
 @app.route("/api/generate")
 def generate_outfit():
     with get_database() as connection:

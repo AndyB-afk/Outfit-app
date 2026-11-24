@@ -44,6 +44,24 @@
                     </div>
                   {% endfor %}
                 </div>
+                {% if recommendation.status == "pending" %}
+                  <div class="recommendation-actions">
+                    <form
+                      method="post"
+                      action="/api/recommendations/{{ recommendation.id }}/status"
+                    >
+                      <input type="hidden" name="status" value="approved">
+                      <button type="submit">Approve</button>
+                    </form>
+                    <form
+                      method="post"
+                      action="/api/recommendations/{{ recommendation.id }}/status"
+                    >
+                      <input type="hidden" name="status" value="rejected">
+                      <button class="reject-button" type="submit">Reject</button>
+                    </form>
+                  </div>
+                {% endif %}
               </article>
             {% endfor %}
           {% else %}
