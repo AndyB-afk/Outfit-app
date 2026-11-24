@@ -2,7 +2,15 @@ import json
 import os
 import sqlite3
 
-from flask import Flask, jsonify, render_template, request, send_from_directory
+from flask import (
+    Flask,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 
 
 app = Flask(__name__)
@@ -225,6 +233,8 @@ def update_recommendation_status(recommendation_id):
     status = (request.form.get("status") or "").strip()
 
     if status not in {"approved", "rejected"}:
+        if request.content_type and "application/json" in request.content_type:
+            return jsonify({"error": "Status must be approved or rejected."}), 400
         return jsonify({"error": "Status must be approved or rejected."}), 400
 
     with get_database() as connection:
@@ -238,7 +248,15 @@ def update_recommendation_status(recommendation_id):
         )
 
     if cursor.rowcount == 0:
+        if request.content_type and "application/json" in request.content_type:
+            return jsonify({"error": "Recommendation not found."}), 404
         return jsonify({"error": "Recommendation not found."}), 404
+
+    if request.form:
+        return redirect(url_for("owner_page"))
+
+    if request.content_type and "application/json" in request.content_type:
+        return jsonify({"id": recommendation_id, "status": status})
 
     return jsonify({"id": recommendation_id, "status": status})
 
