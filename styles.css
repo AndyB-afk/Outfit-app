@@ -193,8 +193,8 @@ body[data-theme="spring"]::after {
   border-radius: 1rem;
   background: rgba(246, 248, 244, 0.72);
   box-shadow: 0 1rem 2.5rem var(--theme-shadow);
-  backdrop-filter: blur(11px);
-  -webkit-backdrop-filter: blur(11px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .generator,
@@ -214,13 +214,7 @@ body[data-theme="spring"]::after {
   max-width: 28rem;
   gap: 0.45rem;
   font-weight: bold;
-  color: white;
-  text-shadow:
-    -1px -1px 0 #102a55,
-    1px -1px 0 #102a55,
-    -1px 1px 0 #102a55,
-    1px 1px 0 #102a55,
-    0 0 3px #102a55;
+  color: var(--theme-ink);
 }
 
 #recommendation-name {
@@ -368,14 +362,15 @@ body[data-theme="spring"]::after {
   padding: 1rem;
   background: rgba(245, 248, 244, 0.58);
   box-shadow: 0 0.9rem 2.2rem rgba(4, 15, 24, 0.16);
-  backdrop-filter: blur(13px);
-  -webkit-backdrop-filter: blur(13px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .item-category legend {
   padding: 0 0.35rem;
   font-weight: bold;
   color: white;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
   text-shadow:
     -1px -1px 0 #102a55,
     1px -1px 0 #102a55,
@@ -403,18 +398,12 @@ body[data-theme="spring"]::after {
   font-weight: normal;
   cursor: pointer;
   box-shadow: 0 0.75rem 1.8rem rgba(4, 15, 24, 0.14);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .item-choice > span {
-  color: white;
-  text-shadow:
-    -1px -1px 0 #102a55,
-    1px -1px 0 #102a55,
-    -1px 1px 0 #102a55,
-    1px 1px 0 #102a55,
-    0 0 3px #102a55;
+  color: var(--theme-ink);
 }
 
 .item-choice-image {
