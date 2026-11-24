@@ -166,6 +166,11 @@ def styles():
     return send_from_directory(app.root_path, "styles.css")
 
 
+@app.route("/static/<path:filename>")
+def static_file(filename):
+    return send_from_directory(os.path.join(app.root_path, "static"), filename)
+
+
 @app.route("/uploads/<path:filename>")
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)

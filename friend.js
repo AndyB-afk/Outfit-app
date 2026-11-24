@@ -15,10 +15,6 @@ function updatePreview(category, item) {
   );
   preview.replaceChildren();
 
-  const label = document.createElement("strong");
-  label.textContent = categoryLabels[category];
-  preview.append(label);
-
   const image = document.createElement("div");
   image.className = "preview-image";
 
@@ -30,10 +26,7 @@ function updatePreview(category, item) {
   } else {
     image.textContent = "No image";
   }
-
-  const name = document.createElement("span");
-  name.textContent = item.name;
-  preview.append(image, name);
+  preview.append(image);
 }
 
 function createChoice(category, item) {
@@ -94,13 +87,10 @@ async function loadCloset() {
     const preview = document.querySelector(
       `.preview-item[data-category="${category}"]`,
     );
-
-    const label = document.createElement("strong");
-    label.textContent = categoryLabels[category];
     const image = document.createElement("div");
     image.className = "preview-image";
     image.textContent = "Select an item";
-    preview.replaceChildren(label, image);
+    preview.replaceChildren(image);
   });
 }
 
