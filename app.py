@@ -2,7 +2,7 @@ import json
 import os
 import sqlite3
 
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, render_template, request, send_from_directory
 
 
 app = Flask(__name__)
@@ -92,7 +92,55 @@ def friend_builder():
 
 @app.route("/owner")
 def owner_page():
-    return send_from_directory(app.root_path, "owner.html")
+    with get_database() as connection:
+        recommendation_rows = connection.execute(
+            """
+            SELECT id, author, selected_items, status, created_at
+            FROM recommendations
+            ORDER BY id DESC
+            """
+        ).fetchall()
+        clothes_rows = connection.execute(
+            """
+            SELECT id, name, category, image_filename, color, style, available
+            FROM clothes
+            WHERE available = 1
+            """
+        ).fetchall()
+
+    clothes_by_id = {
+        str(clothes["id"]): dict(clothes)
+        for clothes in clothes_rows
+    }
+    category_labels = {
+        "hoodies": "Hoodie / sweater",
+        "shirts": "Shirt",
+        "pants": "Pants",
+        "shoes": "Shoes",
+    }
+
+    recommendations = []
+    for row in recommendation_rows:
+        recommendation = dict(row)
+        recommendation["selected_items"] = json.loads(
+            recommendation["selected_items"]
+        )
+        recommendation["pieces"] = [
+            {
+                "category": category_labels[category],
+                "item": clothes_by_id.get(
+                    str(item_id),
+                    {"name": f"Item {item_id}", "image_filename": None},
+                ),
+            }
+            for category, item_id in recommendation["selected_items"].items()
+        ]
+        recommendations.append(recommendation)
+
+    return render_template(
+        "owner.html",
+        recommendations=recommendations,
+    )
 
 
 @app.route("/friend.js")

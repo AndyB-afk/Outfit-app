@@ -261,6 +261,29 @@ body {
   margin: 0.25rem 0;
 }
 
+.recommendation-pieces {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(7rem, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.recommendation-piece {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 0.65rem;
+  background: white;
+}
+
+.recommendation-piece img {
+  width: 100%;
+  height: 8rem;
+  border-radius: 0.35rem;
+  object-fit: cover;
+}
+
 .generated-outfit {
   display: grid;
   grid-template-columns: repeat(4, minmax(8rem, 1fr));
