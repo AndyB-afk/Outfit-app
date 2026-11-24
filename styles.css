@@ -793,6 +793,108 @@ body.dialog-open .seasonal-weather {
   border: 1px dashed rgba(27, 54, 94, 0.28);
   border-radius: 0.75rem;
   color: #617066;
+  box-sizing: border-box;
+}
+
+.owner-outfit {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.generated-outfit {
+  width: 100%;
+  max-width: 100%;
+  min-height: 14rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.outfit-piece {
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.pin-page {
+  width: min(94rem, calc(100% - 2rem));
+}
+
+.cork-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  align-items: start;
+  gap: 1.25rem;
+  min-height: 42rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1.25rem solid #d5b06e;
+  border-radius: 1.1rem;
+  outline: 0.35rem solid #f1ddb2;
+  outline-offset: -0.55rem;
+  padding: 2rem;
+  background:
+    linear-gradient(rgba(255, 248, 223, 0.08), rgba(116, 82, 42, 0.08)),
+    url("/static/corkboard.png") center / cover;
+  box-shadow:
+    inset 0 0 2.5rem rgba(72, 48, 22, 0.36),
+    0 1.5rem 4rem rgba(3, 10, 18, 0.34);
+}
+
+.pinned-outfit {
+  position: relative;
+  border: 0.5rem solid #f7f1df;
+  border-radius: 0.35rem;
+  padding: 0.7rem;
+  background: #f7f1df;
+  box-shadow: 0 0.9rem 1.8rem rgba(58, 38, 18, 0.24);
+  transform: rotate(-1deg);
+}
+
+.pinned-outfit:nth-child(even) {
+  transform: rotate(1deg);
+}
+
+.pinned-author {
+  margin-bottom: 0.55rem;
+  color: #334b75;
+  font-family: "Oswald", sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pinned-pieces {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem;
+}
+
+.pinned-pieces img,
+.pinned-placeholder {
+  width: 100%;
+  height: 7.5rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.pinned-placeholder {
+  display: grid;
+  place-items: center;
+  color: #617066;
+  text-align: center;
+}
+
+.cork-empty {
+  grid-column: 1 / -1;
+  margin: auto;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: rgba(247, 241, 223, 0.92);
+  color: #617066;
+  font-weight: 700;
+  text-align: center;
 }
 
 .outfit-piece {

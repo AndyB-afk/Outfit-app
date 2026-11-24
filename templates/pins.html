@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Public Outfit Pin Board</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body data-theme="winter">
+    <main class="app-shell pin-page">
+      <header class="app-header">
+        <h1>Outfit Pin Board</h1>
+        <p>Community looks selected for everyone to enjoy.</p>
+      </header>
+
+      <section class="cork-board" aria-label="Pinned outfit board">
+        {% if pinned_outfits %}
+          {% for outfit in pinned_outfits %}
+            <article class="pinned-outfit">
+              <div class="pinned-author">
+                {{ outfit.author }}
+              </div>
+              <div class="pinned-pieces">
+                {% for piece in outfit.pieces %}
+                  {% if piece.item.image_filename %}
+                    <img
+                      src="/uploads/{{ piece.item.image_filename }}"
+                      alt="{{ piece.item.name }}"
+                    >
+                  {% else %}
+                    <div class="pinned-placeholder">
+                      {{ piece.item.name }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </article>
+          {% endfor %}
+        {% else %}
+          <p class="cork-empty">No outfits are pinned yet.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

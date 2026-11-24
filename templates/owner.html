@@ -151,6 +151,7 @@
                   {% if outfit.favorite %}Favorite{% endif %}
                   {% if outfit.pinned %} · Public pin{% endif %}
                 </strong>
+                <span>Created by {{ outfit.author }}</span>
               </article>
             {% endfor %}
           {% else %}

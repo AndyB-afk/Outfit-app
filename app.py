@@ -60,12 +60,26 @@ def initialize_database():
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 recommendation_id INTEGER,
                 selected_items TEXT NOT NULL,
+                author TEXT NOT NULL DEFAULT 'Anonymous friend',
                 favorite INTEGER NOT NULL DEFAULT 0,
                 pinned INTEGER NOT NULL DEFAULT 0,
                 created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
             )
             """
         )
+        saved_columns = {
+            column["name"]
+            for column in connection.execute(
+                "PRAGMA table_info(saved_outfits)"
+            ).fetchall()
+        }
+        if "author" not in saved_columns:
+            connection.execute(
+                """
+                ALTER TABLE saved_outfits
+                ADD COLUMN author TEXT NOT NULL DEFAULT 'Anonymous friend'
+                """
+            )
 
         existing_count = connection.execute(
             "SELECT COUNT(*) FROM clothes"
@@ -110,6 +124,56 @@ def friend_builder():
     return send_from_directory(app.root_path, "friend.html")
 
 
+@app.route("/pins")
+def public_pin_board():
+    with get_database() as connection:
+        pinned_rows = connection.execute(
+            """
+            SELECT id, recommendation_id, selected_items,
+                   author, favorite, pinned, created_at
+            FROM saved_outfits
+            WHERE pinned = 1
+            ORDER BY id DESC
+            """
+        ).fetchall()
+        clothes_rows = connection.execute(
+            """
+            SELECT id, name, category, image_filename, color, style, available
+            FROM clothes
+            WHERE available = 1
+            """
+        ).fetchall()
+
+    clothes_by_id = {
+        str(clothes["id"]): dict(clothes)
+        for clothes in clothes_rows
+    }
+    category_labels = {
+        "hoodies": "Hoodie / sweater",
+        "shirts": "Shirt",
+        "pants": "Pants",
+        "shoes": "Shoes",
+    }
+
+    pinned_outfits = []
+    for row in pinned_rows:
+        pinned = dict(row)
+        pinned["selected_items"] = json.loads(pinned["selected_items"])
+        pinned["pieces"] = [
+            {
+                "category": category_labels[category],
+                "item": clothes_by_id.get(
+                    str(item_id),
+                    {"name": f"Item {item_id}", "image_filename": None},
+                ),
+            }
+            for category, item_id in pinned["selected_items"].items()
+        ]
+        pinned_outfits.append(pinned)
+
+    return render_template("pins.html", pinned_outfits=pinned_outfits)
+
+
 @app.route("/owner")
 def owner_page():
     with get_database() as connection:
@@ -129,7 +193,7 @@ def owner_page():
         ).fetchall()
         saved_rows = connection.execute(
             """
-            SELECT id, recommendation_id, selected_items,
+            SELECT id, recommendation_id, selected_items, author,
                    favorite, pinned, created_at
             FROM saved_outfits
             ORDER BY id DESC
@@ -338,28 +402,49 @@ def recommendation_action(recommendation_id):
             connection.execute(
                 """
                 INSERT INTO saved_outfits
-                    (recommendation_id, selected_items)
-                VALUES (?, ?)
+                    (recommendation_id, selected_items, author)
+                VALUES (?, ?, ?)
                 """,
-                (recommendation_id, row["selected_items"]),
+                (
+                    recommendation_id,
+                    row["selected_items"],
+                    connection.execute(
+                        "SELECT author FROM recommendations WHERE id = ?",
+                        (recommendation_id,),
+                    ).fetchone()["author"],
+                ),
             )
         elif action == "favorite":
             connection.execute(
                 """
                 INSERT INTO saved_outfits
-                    (recommendation_id, selected_items, favorite)
-                VALUES (?, ?, 1)
+                    (recommendation_id, selected_items, author, favorite)
+                VALUES (?, ?, ?, 1)
                 """,
-                (recommendation_id, row["selected_items"]),
+                (
+                    recommendation_id,
+                    row["selected_items"],
+                    connection.execute(
+                        "SELECT author FROM recommendations WHERE id = ?",
+                        (recommendation_id,),
+                    ).fetchone()["author"],
+                ),
             )
         elif action == "pin":
             connection.execute(
                 """
                 INSERT INTO saved_outfits
-                    (recommendation_id, selected_items, pinned)
-                VALUES (?, ?, 1)
+                    (recommendation_id, selected_items, author, pinned)
+                VALUES (?, ?, ?, 1)
                 """,
-                (recommendation_id, row["selected_items"]),
+                (
+                    recommendation_id,
+                    row["selected_items"],
+                    connection.execute(
+                        "SELECT author FROM recommendations WHERE id = ?",
+                        (recommendation_id,),
+                    ).fetchone()["author"],
+                ),
             )
 
     return redirect(url_for("owner_page"))
