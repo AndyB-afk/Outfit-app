@@ -54,6 +54,18 @@ def initialize_database():
             )
             """
         )
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS saved_outfits (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                recommendation_id INTEGER,
+                selected_items TEXT NOT NULL,
+                favorite INTEGER NOT NULL DEFAULT 0,
+                pinned INTEGER NOT NULL DEFAULT 0,
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
 
         existing_count = connection.execute(
             "SELECT COUNT(*) FROM clothes"
@@ -115,6 +127,14 @@ def owner_page():
             WHERE available = 1
             """
         ).fetchall()
+        saved_rows = connection.execute(
+            """
+            SELECT id, recommendation_id, selected_items,
+                   favorite, pinned, created_at
+            FROM saved_outfits
+            ORDER BY id DESC
+            """
+        ).fetchall()
 
     clothes_by_id = {
         str(clothes["id"]): dict(clothes)
@@ -145,9 +165,26 @@ def owner_page():
         ]
         recommendations.append(recommendation)
 
+    saved_outfits = []
+    for row in saved_rows:
+        saved = dict(row)
+        saved["selected_items"] = json.loads(saved["selected_items"])
+        saved["pieces"] = [
+            {
+                "category": category_labels[category],
+                "item": clothes_by_id.get(
+                    str(item_id),
+                    {"name": f"Item {item_id}", "image_filename": None},
+                ),
+            }
+            for category, item_id in saved["selected_items"].items()
+        ]
+        saved_outfits.append(saved)
+
     return render_template(
         "owner.html",
         recommendations=recommendations,
+        saved_outfits=saved_outfits,
     )
 
 
@@ -270,6 +307,60 @@ def update_recommendation_status(recommendation_id):
 def clear_recommendations():
     with get_database() as connection:
         connection.execute("DELETE FROM recommendations")
+
+    return redirect(url_for("owner_page"))
+
+
+@app.route("/api/recommendations/<int:recommendation_id>/action", methods=["POST"])
+def recommendation_action(recommendation_id):
+    action = (request.form.get("action") or "").strip()
+
+    with get_database() as connection:
+        row = connection.execute(
+            """
+            SELECT id, selected_items
+            FROM recommendations
+            WHERE id = ?
+            """,
+            (recommendation_id,),
+        ).fetchone()
+
+    if not row:
+        return redirect(url_for("owner_page"))
+
+    with get_database() as connection:
+        if action == "remove":
+            connection.execute(
+                "DELETE FROM recommendations WHERE id = ?",
+                (recommendation_id,),
+            )
+        elif action == "save":
+            connection.execute(
+                """
+                INSERT INTO saved_outfits
+                    (recommendation_id, selected_items)
+                VALUES (?, ?)
+                """,
+                (recommendation_id, row["selected_items"]),
+            )
+        elif action == "favorite":
+            connection.execute(
+                """
+                INSERT INTO saved_outfits
+                    (recommendation_id, selected_items, favorite)
+                VALUES (?, ?, 1)
+                """,
+                (recommendation_id, row["selected_items"]),
+            )
+        elif action == "pin":
+            connection.execute(
+                """
+                INSERT INTO saved_outfits
+                    (recommendation_id, selected_items, pinned)
+                VALUES (?, ?, 1)
+                """,
+                (recommendation_id, row["selected_items"]),
+            )
 
     return redirect(url_for("owner_page"))
 

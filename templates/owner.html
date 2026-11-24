@@ -87,6 +87,36 @@
                     </form>
                   </div>
                 {% endif %}
+                <div class="recommendation-workflow">
+                  <form
+                    method="post"
+                    action="/api/recommendations/{{ recommendation.id }}/action"
+                  >
+                    <input type="hidden" name="action" value="remove">
+                    <button type="submit" class="remove-button">Remove</button>
+                  </form>
+                  <form
+                    method="post"
+                    action="/api/recommendations/{{ recommendation.id }}/action"
+                  >
+                    <input type="hidden" name="action" value="save">
+                    <button type="submit">Save</button>
+                  </form>
+                  <form
+                    method="post"
+                    action="/api/recommendations/{{ recommendation.id }}/action"
+                  >
+                    <input type="hidden" name="action" value="favorite">
+                    <button type="submit">Favorite</button>
+                  </form>
+                  <form
+                    method="post"
+                    action="/api/recommendations/{{ recommendation.id }}/action"
+                  >
+                    <input type="hidden" name="action" value="pin">
+                    <button type="submit">Pin</button>
+                  </form>
+                </div>
               </article>
             {% endfor %}
           {% else %}
@@ -95,6 +125,39 @@
           </div>
         </section>
       </div>
+
+      <section class="saved-outfits">
+        <div class="owner-section-heading">
+          <div>
+            <span class="section-kicker">Archive</span>
+            <h2>Saved fits</h2>
+          </div>
+        </div>
+        <div class="saved-outfit-list">
+          {% if saved_outfits %}
+            {% for outfit in saved_outfits %}
+              <article class="saved-outfit-card">
+                <div>
+                  {% for piece in outfit.pieces %}
+                    {% if piece.item.image_filename %}
+                      <img
+                        src="/uploads/{{ piece.item.image_filename }}"
+                        alt="{{ piece.item.name }}"
+                      >
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <strong>
+                  {% if outfit.favorite %}Favorite{% endif %}
+                  {% if outfit.pinned %} · Public pin{% endif %}
+                </strong>
+              </article>
+            {% endfor %}
+          {% else %}
+            <p>No saved fits yet.</p>
+          {% endif %}
+        </div>
+      </section>
     </main>
   </body>
 </html>

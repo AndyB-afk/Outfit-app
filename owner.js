@@ -61,3 +61,46 @@ clearBuiltOutfit.addEventListener("click", () => {
   generatedOutfit.append(emptyState);
 });
 
+document.querySelectorAll(".recommendation-card").forEach((card) => {
+  card.addEventListener("click", (event) => {
+    if (event.target.closest("form")) {
+      return;
+    }
+
+    document.querySelectorAll(".recommendation-card").forEach((entry) => {
+      entry.classList.remove("selected-recommendation");
+    });
+    card.classList.add("selected-recommendation");
+
+    generatedOutfit.replaceChildren();
+    card.querySelectorAll(".recommendation-piece").forEach((piece) => {
+      const preview = document.createElement("article");
+      preview.className = "outfit-piece";
+
+      const label = document.createElement("strong");
+      label.textContent = piece.querySelector("span").textContent;
+      preview.append(label);
+
+      const sourceImage = piece.querySelector("img");
+      if (sourceImage) {
+        const image = document.createElement("div");
+        image.className = "outfit-piece-image";
+        const copy = document.createElement("img");
+        copy.src = sourceImage.src;
+        copy.alt = sourceImage.alt;
+        image.append(copy);
+        preview.append(image);
+      }
+
+      const name = piece.querySelector("strong:last-of-type");
+      if (name) {
+        const itemName = document.createElement("span");
+        itemName.textContent = name.textContent;
+        preview.append(itemName);
+      }
+
+      generatedOutfit.append(preview);
+    });
+  });
+});
+
