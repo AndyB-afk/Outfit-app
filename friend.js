@@ -8,6 +8,15 @@ const categoryLabels = {
 const selectedItems = {};
 const recommendationForm = document.querySelector("#recommendation-form");
 const recommendationStatus = document.querySelector("#recommendation-status");
+const anonymousConfirmation = document.querySelector(
+  "#anonymous-confirmation",
+);
+const addNameButton = document.querySelector("#add-name-button");
+const confirmAnonymousButton = document.querySelector(
+  "#confirm-anonymous-button",
+);
+const authorInput = document.querySelector("#recommendation-author");
+let shouldSubmitAnonymous = false;
 
 function updatePreview(category, item) {
   const preview = document.querySelector(
@@ -94,19 +103,7 @@ async function loadCloset() {
   });
 }
 
-recommendationForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const missingCategory = Object.keys(categoryLabels).find(
-    (category) => !selectedItems[category],
-  );
-
-  if (missingCategory) {
-    recommendationStatus.textContent =
-      `Please choose ${categoryLabels[missingCategory].toLowerCase()}.`;
-    return;
-  }
-
+async function submitRecommendation() {
   const formData = new FormData(recommendationForm);
   const selectedItemsForServer = {};
 
@@ -134,12 +131,48 @@ recommendationForm.addEventListener("submit", async (event) => {
   recommendationStatus.textContent =
     "Recommendation sent. It is waiting for owner review.";
   recommendationForm.reset();
+  shouldSubmitAnonymous = false;
 
   Object.keys(categoryLabels).forEach((category) => {
     delete selectedItems[category];
   });
 
   await loadCloset();
+}
+
+recommendationForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const missingCategory = Object.keys(categoryLabels).find(
+    (category) => !selectedItems[category],
+  );
+
+  if (missingCategory) {
+    recommendationStatus.textContent =
+      `Please choose ${categoryLabels[missingCategory].toLowerCase()}.`;
+    return;
+  }
+
+  if (!authorInput.value.trim() && !shouldSubmitAnonymous) {
+    anonymousConfirmation.showModal();
+    document.body.classList.add("dialog-open");
+    return;
+  }
+
+  await submitRecommendation();
+});
+
+addNameButton.addEventListener("click", () => {
+  anonymousConfirmation.close();
+  document.body.classList.remove("dialog-open");
+  authorInput.focus();
+});
+
+confirmAnonymousButton.addEventListener("click", async () => {
+  shouldSubmitAnonymous = true;
+  anonymousConfirmation.close();
+  document.body.classList.remove("dialog-open");
+  await submitRecommendation();
 });
 
 loadCloset();
