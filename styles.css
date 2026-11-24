@@ -228,10 +228,10 @@ body[data-theme="spring"]::after {
   padding: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.26);
   border-radius: 1rem;
-  background: rgba(246, 248, 244, 0.72);
+  background: rgba(246, 248, 244, 0.78);
   box-shadow: 0 1rem 2.5rem var(--theme-shadow);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .generator,
@@ -268,8 +268,8 @@ body[data-theme="spring"]::after {
   font-weight: 500;
   letter-spacing: normal;
   text-transform: none;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   box-shadow: 0 0.75rem 2rem rgba(4, 15, 24, 0.12);
 }
 
@@ -497,10 +497,10 @@ body.dialog-open .seasonal-weather {
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 0.75rem;
   padding: 1rem;
-  background: rgba(245, 248, 244, 0.58);
+  background: rgba(245, 248, 244, 0.66);
   box-shadow: 0 0.9rem 2.2rem rgba(4, 15, 24, 0.16);
-  backdrop-filter: blur(11px);
-  -webkit-backdrop-filter: blur(11px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .item-category legend {
@@ -531,12 +531,12 @@ body.dialog-open .seasonal-weather {
   border: 1px solid rgba(255, 255, 255, 0.44);
   border-radius: 0.5rem;
   padding: 0.65rem;
-  background: rgba(245, 248, 244, 0.64);
+  background: rgba(245, 248, 244, 0.72);
   font-weight: normal;
   cursor: pointer;
   box-shadow: 0 0.75rem 1.8rem rgba(4, 15, 24, 0.14);
-  backdrop-filter: blur(13px);
-  -webkit-backdrop-filter: blur(13px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .item-choice > span {
@@ -633,6 +633,83 @@ body.dialog-open .seasonal-weather {
   grid-template-columns: repeat(4, minmax(8rem, 1fr));
   gap: 1rem;
   margin-top: 1rem;
+}
+
+.owner-layout {
+  display: grid;
+  grid-template-columns: minmax(28rem, 1.08fr) minmax(20rem, 0.92fr);
+  align-items: start;
+  gap: 1.25rem;
+}
+
+.owner-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.owner-section-heading h2 {
+  margin: 0.15rem 0 0;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+}
+
+.section-kicker {
+  color: #334b75;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.recommendations {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.recommendations .recommendation-card {
+  max-width: 38rem;
+}
+
+.recommendation-piece img {
+  height: 6.5rem;
+}
+
+.recommendation-pieces {
+  grid-template-columns: repeat(2, minmax(7rem, 1fr));
+}
+
+.clear-built-outfit,
+.clear-recommendations {
+  border: 1px solid rgba(27, 54, 94, 0.24);
+  border-radius: 0.65rem;
+  background: rgba(247, 250, 247, 0.74);
+  color: #1b365e;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.clear-built-outfit {
+  margin-top: 1rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.clear-recommendations {
+  padding: 0.55rem 0.8rem;
+  white-space: nowrap;
+}
+
+.empty-outfit {
+  grid-column: 1 / -1;
+  min-height: 12rem;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  border: 1px dashed rgba(27, 54, 94, 0.28);
+  border-radius: 0.75rem;
+  color: #617066;
 }
 
 .outfit-piece {

@@ -266,6 +266,14 @@ def update_recommendation_status(recommendation_id):
     return jsonify({"id": recommendation_id, "status": status})
 
 
+@app.route("/api/recommendations/clear", methods=["POST"])
+def clear_recommendations():
+    with get_database() as connection:
+        connection.execute("DELETE FROM recommendations")
+
+    return redirect(url_for("owner_page"))
+
+
 @app.route("/api/generate")
 def generate_outfit():
     with get_database() as connection:

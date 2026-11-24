@@ -14,15 +14,40 @@
         <p>Generate coordinated outfits and review friend recommendations.</p>
       </header>
 
-      <section class="generator">
-        <h2>Generated outfit</h2>
-        <button id="generate-outfit" type="button">Generate Outfit</button>
-        <div id="generated-outfit" class="generated-outfit"></div>
-      </section>
+      <div class="owner-layout">
+        <section class="generator owner-outfit">
+          <div class="owner-section-heading">
+            <div>
+              <span class="section-kicker">Outfit studio</span>
+              <h2>Built outfit</h2>
+            </div>
+            <button id="generate-outfit" type="button">Generate Outfit</button>
+          </div>
+          <div id="generated-outfit" class="generated-outfit">
+            <p class="empty-outfit">Generate an outfit to begin.</p>
+          </div>
+          <button
+            id="clear-built-outfit"
+            class="clear-built-outfit"
+            type="button"
+          >
+            Clear outfit
+          </button>
+        </section>
 
-      <section class="recommendations">
-        <h2>Friend recommendations</h2>
-        <div id="recommendation-list">
+        <section class="recommendations">
+          <div class="owner-section-heading">
+            <div>
+              <span class="section-kicker">Community</span>
+              <h2>Friend recommendations</h2>
+            </div>
+            <form method="post" action="/api/recommendations/clear">
+              <button class="clear-recommendations" type="submit">
+                Clear all
+              </button>
+            </form>
+          </div>
+          <div id="recommendation-list">
           {% if recommendations %}
             {% for recommendation in recommendations %}
               <article class="recommendation-card">
@@ -67,8 +92,9 @@
           {% else %}
             <p>No recommendations yet.</p>
           {% endif %}
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </main>
   </body>
 </html>

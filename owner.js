@@ -7,7 +7,7 @@ const categoryLabels = {
 
 const generateButton = document.querySelector("#generate-outfit");
 const generatedOutfit = document.querySelector("#generated-outfit");
-const recommendationList = document.querySelector("#recommendation-list");
+const clearBuiltOutfit = document.querySelector("#clear-built-outfit");
 
 function createOutfitPiece(category, item) {
   const piece = document.createElement("article");
@@ -51,5 +51,13 @@ generateButton.addEventListener("click", async () => {
       createOutfitPiece(category, result[category]),
     );
   });
+});
+
+clearBuiltOutfit.addEventListener("click", () => {
+  generatedOutfit.replaceChildren();
+  const emptyState = document.createElement("p");
+  emptyState.className = "empty-outfit";
+  emptyState.textContent = "Generate an outfit to begin.";
+  generatedOutfit.append(emptyState);
 });
 
