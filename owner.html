@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Outfit Owner Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/owner.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell owner-page">
+      <header class="app-header">
+        <h1>Owner Dashboard</h1>
+        <p>Generate coordinated outfits and review friend recommendations.</p>
+      </header>
+
+      <section class="generator">
+        <h2>Generated outfit</h2>
+        <button id="generate-outfit" type="button">Generate Outfit</button>
+        <div id="generated-outfit" class="generated-outfit"></div>
+      </section>
+
+      <section class="recommendations">
+        <h2>Friend recommendations</h2>
+        <div id="recommendation-list"></div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -26,6 +26,7 @@ body {
 }
 
 .generator,
+.closet-manager,
 .recommendation-builder,
 .inspiration {
   margin-bottom: 2rem;
@@ -54,6 +55,68 @@ body {
   border-radius: 0.5rem;
   padding: 0.65rem;
   font: inherit;
+}
+
+#clothes-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+#clothes-form label {
+  display: grid;
+  gap: 0.45rem;
+  font-weight: bold;
+}
+
+#clothes-form input,
+#clothes-form select {
+  min-height: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.65rem;
+  background: white;
+  font: inherit;
+}
+
+#clothes-status {
+  min-height: 1.5rem;
+  font-weight: bold;
+}
+
+.clothes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 0.75rem;
+}
+
+.clothes-card {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: #f9fafb;
+}
+
+.clothes-card img {
+  width: 100%;
+  height: 8rem;
+  object-fit: cover;
+  background: #e5e7eb;
+}
+
+.clothes-card div {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.65rem;
+}
+
+.clothes-card strong,
+.clothes-card span {
+  overflow-wrap: anywhere;
 }
 
 .builder-layout {
@@ -196,6 +259,39 @@ body {
 
 .recommendation-card p {
   margin: 0.25rem 0;
+}
+
+.generated-outfit {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(8rem, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.outfit-piece {
+  display: grid;
+  gap: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+}
+
+.outfit-piece-image {
+  display: grid;
+  height: 12rem;
+  place-items: center;
+  border: 1px dashed #cbd5e1;
+  border-radius: 0.5rem;
+  background: white;
+  color: #9ca3af;
+}
+
+.outfit-piece-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
 }
 
 button {
