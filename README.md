@@ -35,3 +35,7 @@ To be selected after the first prototype.
 - Created app.js to have my closet items be options and to be randomly chosen to test the website.
 - Created Style inpiration board"
 - Created the Split-View outfit recomndation builder
+
+- Day 3: Updated home server and connected it to the repository so it can host it there.
+
+- Day 4: Split the Website into a two paged site to separate the usage of features to the public.
