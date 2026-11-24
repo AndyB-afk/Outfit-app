@@ -773,6 +773,26 @@ body.dialog-open .seasonal-weather {
   background: transparent;
 }
 
+.saved-outfit-card form {
+  margin-top: 0.65rem;
+}
+
+.saved-outfit-card button,
+.remove-button {
+  min-height: 2.25rem;
+  border: 1px solid rgba(185, 28, 28, 0.28);
+  border-radius: 0.55rem;
+  padding: 0.5rem 0.7rem;
+  background: rgba(255, 247, 247, 0.92);
+  color: #991b1b;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.pinned-outfits-section {
+  margin-top: 1rem;
+}
+
 .recommendation-pieces {
   grid-template-columns: repeat(4, minmax(5.5rem, 1fr));
 }
@@ -832,6 +852,12 @@ body.dialog-open .seasonal-weather {
   width: min(94rem, calc(100% - 2rem));
 }
 
+body.pin-page {
+  background:
+    linear-gradient(rgba(4, 12, 22, 0.38), rgba(4, 12, 22, 0.68)),
+    url("/static/seasons/winter.jpg") center / cover fixed;
+}
+
 body.pin-board {
   background:
     linear-gradient(rgba(13, 22, 18, 0.46), rgba(13, 22, 18, 0.62)),
@@ -864,10 +890,10 @@ body.pin-board {
 
 .pinned-outfit {
   position: relative;
-  border: 0.5rem solid #f7f1df;
+  border: 0.5rem solid rgba(247, 241, 223, 0.75);
   border-radius: 0.35rem;
   padding: 0.7rem;
-  background: #f7f1df;
+  background: rgba(247, 241, 223, 0.75);
   box-shadow: 0 0.9rem 1.8rem rgba(58, 38, 18, 0.24);
   transform: rotate(-1deg);
 }

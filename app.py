@@ -375,6 +375,17 @@ def clear_recommendations():
     return redirect(url_for("owner_page"))
 
 
+@app.route("/api/saved-outfits/<int:outfit_id>/remove", methods=["POST"])
+def remove_saved_outfit(outfit_id):
+    with get_database() as connection:
+        connection.execute(
+            "DELETE FROM saved_outfits WHERE id = ?",
+            (outfit_id,),
+        )
+
+    return redirect(url_for("owner_page"))
+
+
 @app.route("/api/recommendations/<int:recommendation_id>/action", methods=["POST"])
 def recommendation_action(recommendation_id):
     action = (request.form.get("action") or "").strip()

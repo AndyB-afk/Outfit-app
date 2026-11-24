@@ -136,26 +136,75 @@
         <div class="saved-outfit-list">
           {% if saved_outfits %}
             {% for outfit in saved_outfits %}
-              <article class="saved-outfit-card">
-                <div>
-                  {% for piece in outfit.pieces %}
-                    {% if piece.item.image_filename %}
-                      <img
-                        src="/uploads/{{ piece.item.image_filename }}"
-                        alt="{{ piece.item.name }}"
-                      >
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <strong>
-                  {% if outfit.favorite %}Favorite{% endif %}
-                  {% if outfit.pinned %} · Public pin{% endif %}
-                </strong>
-                <span>Created by {{ outfit.author }}</span>
-              </article>
+              {% if not outfit.pinned %}
+                <article class="saved-outfit-card">
+                  <div>
+                    {% for piece in outfit.pieces %}
+                      {% if piece.item.image_filename %}
+                        <img
+                          src="/uploads/{{ piece.item.image_filename }}"
+                          alt="{{ piece.item.name }}"
+                        >
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <strong>{% if outfit.favorite %}Favorite{% endif %}</strong>
+                  <span>Created by {{ outfit.author }}</span>
+                  <form
+                    method="post"
+                    action="/api/saved-outfits/{{ outfit.id }}/remove"
+                  >
+                    <button type="submit" class="remove-button">Remove</button>
+                  </form>
+                </article>
+              {% endif %}
             {% endfor %}
           {% else %}
             <p>No saved fits yet.</p>
+          {% endif %}
+        </div>
+      </section>
+
+      <section class="saved-outfits pinned-outfits-section">
+        <div class="owner-section-heading">
+          <div>
+            <span class="section-kicker">Public board</span>
+            <h2>Pinned fits</h2>
+          </div>
+        </div>
+        <div class="saved-outfit-list">
+          {% set pinned_count = namespace(value=0) %}
+          {% if saved_outfits %}
+            {% for outfit in saved_outfits %}
+              {% if outfit.pinned %}
+                {% set pinned_count.value = pinned_count.value + 1 %}
+                <article class="saved-outfit-card">
+                  <div>
+                    {% for piece in outfit.pieces %}
+                      {% if piece.item.image_filename %}
+                        <img
+                          src="/uploads/{{ piece.item.image_filename }}"
+                          alt="{{ piece.item.name }}"
+                        >
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <strong>Public pin</strong>
+                  <span>Created by {{ outfit.author }}</span>
+                  <form
+                    method="post"
+                    action="/api/saved-outfits/{{ outfit.id }}/remove"
+                  >
+                    <button type="submit" class="remove-button">
+                      Remove pin
+                    </button>
+                  </form>
+                </article>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if pinned_count.value == 0 %}
+            <p>No pinned fits yet.</p>
           {% endif %}
         </div>
       </section>
