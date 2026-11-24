@@ -220,6 +220,19 @@ body[data-theme="spring"]::after {
   font-weight: 600;
 }
 
+.page-link {
+  display: inline-flex;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  padding: 0.65rem 0.95rem;
+  background: rgba(247, 250, 247, 0.9);
+  color: #1b365e;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 0.75rem 2rem rgba(3, 10, 18, 0.18);
+}
+
 .generator,
 .closet-manager,
 .recommendation-builder,
@@ -819,6 +832,13 @@ body.dialog-open .seasonal-weather {
   width: min(94rem, calc(100% - 2rem));
 }
 
+body.pin-board {
+  background:
+    linear-gradient(rgba(13, 22, 18, 0.46), rgba(13, 22, 18, 0.62)),
+    url("/static/pin-board-background.png") center / cover fixed;
+}
+
+
 .cork-board {
   position: relative;
   display: grid;
@@ -828,14 +848,15 @@ body.dialog-open .seasonal-weather {
   min-height: 42rem;
   box-sizing: border-box;
   overflow: hidden;
-  border: 1.25rem solid #d5b06e;
+  border: 1.25rem solid #6f4428;
   border-radius: 1.1rem;
-  outline: 0.35rem solid #f1ddb2;
+  outline: 0.35rem solid #b58757;
   outline-offset: -0.55rem;
   padding: 2rem;
   background:
-    linear-gradient(rgba(255, 248, 223, 0.08), rgba(116, 82, 42, 0.08)),
-    url("/static/corkboard.png") center / cover;
+    radial-gradient(circle at 18% 24%, rgba(255, 220, 168, 0.16), transparent 0.35rem),
+    radial-gradient(circle at 72% 68%, rgba(62, 35, 20, 0.24), transparent 0.45rem),
+    repeating-radial-gradient(circle at 30% 40%, #9a6844 0, #9a6844 0.12rem, #835236 0.18rem, #835236 0.36rem);
   box-shadow:
     inset 0 0 2.5rem rgba(72, 48, 22, 0.36),
     0 1.5rem 4rem rgba(3, 10, 18, 0.34);
